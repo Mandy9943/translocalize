@@ -1,0 +1,12 @@
+{
+  "projectId": "prj_hkM44fkZ6VeBpFYPG22iE",
+  "locale": {
+    "source": "en",
+    "targets": ["es", "de", "fr", "it"]
+  },
+  "files": {
+    "json": {
+      "include": ["messages/[locale].json"]
+    }
+  }
+}
