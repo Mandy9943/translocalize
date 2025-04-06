@@ -62,6 +62,15 @@ This will create:
 
 ## Usage
 
+### Getting a Gemini API Key
+
+To use TransLocalize, you'll need a Google Gemini API key:
+
+1. Visit [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Sign in with your Google account
+3. Create a new API key or use an existing one
+4. Copy the API key for use with TransLocalize
+
 ### Using Environment Variables (Recommended)
 
 1. Create a `.env` file in your project root:
