@@ -20,6 +20,26 @@ The `npm link` command will make the CLI tool available globally on your system.
 
 ## Setup
 
+### Using the Init Command (Recommended)
+
+Run the interactive setup wizard to create the configuration file and folder structure:
+
+```bash
+translocalize init
+```
+
+The wizard will prompt you for:
+1. Source locale (e.g., "en")
+2. Target locales (comma-separated, e.g., "es,fr,de,it")
+3. File path pattern (default: "messages/[locale].json")
+
+This will create:
+- A `translocalize.json` configuration file in your project root
+- The directory structure for your language files
+- An empty source language file you can populate with your strings
+
+### Manual Configuration
+
 1. Create a `translocalize.json` configuration file in the root of your project:
 
 ```json
