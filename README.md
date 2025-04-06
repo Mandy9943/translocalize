@@ -4,17 +4,19 @@ A CLI tool to automate the translation of JSON language files using AI models.
 
 ## Installation
 
-You can install TransLocalize globally:
+### For Development
+
+Clone the repository and set up the project:
 
 ```bash
-npm install -g translocalize
+git clone <repository-url>
+cd translocalize
+npm install
+npm run build
+npm link
 ```
 
-Or use it directly with npx:
-
-```bash
-npx translocalize translate --key YOUR_API_KEY
-```
+The `npm link` command will make the CLI tool available globally on your system.
 
 ## Setup
 
@@ -48,31 +50,17 @@ npx translocalize translate --key YOUR_API_KEY
 GEMINI_API_KEY=your-api-key
 ```
 
-2. Install dotenv as a development dependency:
+2. Run the translation:
 
 ```bash
-npm install --save-dev dotenv
+translocalize translate
 ```
 
-3. Add a script in your package.json:
-
-```json
-{
-  "scripts": {
-    "translate": "node -r dotenv/config node_modules/.bin/translocalize translate"
-  }
-}
-```
-
-4. Run the translation:
-
-```bash
-npm run translate
-```
+TransLocalize automatically loads environment variables from `.env` files in your project directory, so you don't need any additional setup.
 
 ### Command Line Options
 
-Translate language files directly:
+Translate language files directly with an API key:
 
 ```bash
 translocalize translate --key YOUR_API_KEY
@@ -105,17 +93,6 @@ TransLocalize performs the following steps:
    - Translates the extracted strings using the AI provider
    - Preserves the original JSON structure
    - Generates a new language file with the translations
-
-## Development
-
-To build from source:
-
-```bash
-git clone <repository-url>
-cd translocalize
-npm install
-npm run build
-```
 
 ## License
 

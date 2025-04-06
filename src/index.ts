@@ -2,6 +2,7 @@
 
 import chalk from "chalk";
 import { Command } from "commander";
+import "dotenv/config"; // Load environment variables from .env file
 import { loadConfig } from "./config.js";
 import {
   ProviderType,
