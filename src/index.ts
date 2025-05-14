@@ -155,7 +155,6 @@ program
         );
         process.exit(1);
       }
-
       // Load configuration
       console.log(chalk.blue("Loading configuration..."));
       const config = await loadConfig();

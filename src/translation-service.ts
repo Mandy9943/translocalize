@@ -30,6 +30,7 @@ export class TranslationService {
     const { config } = this;
     const sourceLocale = config.locale.source;
     const targetLocales = config.locale.targets;
+    const CHUNK_SIZE = 300; // Number of strings to process in each chunk
 
     console.log(
       chalk.blue(
@@ -65,12 +66,11 @@ export class TranslationService {
 
         // Extract all string values from the source JSON
         const strings = extractStrings(sourceData);
+        const stringKeys = Object.keys(strings);
 
         console.log(
           chalk.blue(
-            `Found ${chalk.bold(
-              Object.keys(strings).length
-            )} strings to translate`
+            `Found ${chalk.bold(stringKeys.length)} strings to translate`
           )
         );
 
@@ -95,17 +95,39 @@ export class TranslationService {
           }
 
           try {
-            // Translate strings
-            const translatedStrings = await this.provider.translateStrings(
-              strings,
-              sourceLocale,
-              targetLocale
-            );
+            let allTranslatedStrings: Record<string, string> = {};
+
+            for (let i = 0; i < stringKeys.length; i += CHUNK_SIZE) {
+              const chunkKeys = stringKeys.slice(i, i + CHUNK_SIZE);
+              const chunkStrings: Record<string, string> = {};
+              for (const key of chunkKeys) {
+                chunkStrings[key] = strings[key];
+              }
+
+              console.log(
+                chalk.blue(
+                  `Translating chunk ${i / CHUNK_SIZE + 1} of ${Math.ceil(
+                    stringKeys.length / CHUNK_SIZE
+                  )} (${chunkKeys.length} strings)`
+                )
+              );
+
+              // Translate strings
+              const translatedChunk = await this.provider.translateStrings(
+                chunkStrings,
+                sourceLocale,
+                targetLocale
+              );
+              allTranslatedStrings = {
+                ...allTranslatedStrings,
+                ...translatedChunk,
+              };
+            }
 
             console.log(
               chalk.green(
                 `Successfully translated ${chalk.bold(
-                  Object.keys(translatedStrings).length
+                  Object.keys(allTranslatedStrings).length
                 )} strings`
               )
             );
@@ -113,7 +135,7 @@ export class TranslationService {
             // Replace strings in the source data with translated strings
             const translatedData = replaceStrings(
               sourceData,
-              translatedStrings
+              allTranslatedStrings
             ) as JsonObject;
 
             // Write translated data to the target file
